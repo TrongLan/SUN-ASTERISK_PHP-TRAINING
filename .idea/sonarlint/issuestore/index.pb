@@ -5,5 +5,7 @@ B
 	.htaccess,f\1\f14dd8fe84b7e99eb63debbf029152463832e7ad
 9
 	index.php,b\b\bb6499b8e938f92a3695fff1afe57edea4b9efb7
-I
-app/controllers/Login.php,5\f\5ff2796114440251aa119b46c4ae01accb98b390
+=
+bootstrap.php,2\5\25e107ad2014436c87d0d11c555519e76499eb18
+C
+core/Controller.php,f\5\f59ac199b97bf2b1f3d1406d4b2481236621d9fe

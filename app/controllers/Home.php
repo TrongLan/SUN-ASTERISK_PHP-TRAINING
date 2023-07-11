@@ -2,12 +2,11 @@
 
 class Home extends Controller
 {
-    function __construct()
+    public function index()
     {
-        echo "This is Home controller.";
+        $this->loadModel("User");
+        $user = new User();
+        $this->loadView("user_info", ["username" => $user->getUserName()]);
     }
 
-    public function index() {
-        echo " Index method executed.";
-    }
 }

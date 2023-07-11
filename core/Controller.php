@@ -8,10 +8,9 @@ class Controller
         return new $model();
     }
 
-    function loadView($view)
+    function loadView($view, $dto=[])
     {
         require_once "./app/views/" . $view . ".php";
-        return new $view();
     }
 
 

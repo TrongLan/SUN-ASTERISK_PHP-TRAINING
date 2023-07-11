@@ -9,7 +9,7 @@ class App
 
     public function __construct()
     {
-        $this->controller = "home";
+        $this->controller = "Home";
         $this->action = "index";
         $this->params = [];
 
@@ -36,17 +36,16 @@ class App
         $urlComponents =
             array_values(
                 array_filter(explode("/", $this->getUrl())));
-
         if (!empty($urlComponents[0])) {
             $this->controller = ucfirst(trim($urlComponents[0]));
-            $filename = "app/controllers/" . ($this->controller) . ".php";
-            if (file_exists($filename)) {
-                require_once $filename;
-                $this->controller = new $this->controller();
-            } else {
-                $this->loadError();
-            }
             unset($urlComponents[0]);
+        }
+        $filename = "app/controllers/" . ($this->controller) . ".php";
+        if (file_exists($filename)) {
+            require_once $filename;
+            $this->controller = new $this->controller();
+        } else {
+            $this->loadError();
         }
 
         if (isset($urlComponents[1])) {

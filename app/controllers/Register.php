@@ -11,8 +11,11 @@ class Register extends Controller
             $userModel->setFirstName($_POST["first-name"]);
             $userModel->setLastName($_POST["last-name"]);
             $userModel->setUsername($_POST["username"]);
-            $userModel->setPassword($_POST["password"]);
-            $userModel->saveUserInfo();
+            $userModel->setPassword(password_hash($_POST["password"], PASSWORD_DEFAULT));
+            $userInfoSaved = $userModel->saveUserInfo();
+            if ($userInfoSaved) {
+                header("Location: /login");
+            }
         }
     }
 }

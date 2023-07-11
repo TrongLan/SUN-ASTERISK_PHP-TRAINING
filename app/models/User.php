@@ -123,12 +123,40 @@ class User extends Database
             $this->lastName,
             $this->userName,
             $this->password);
-        if (mysqli_stmt_execute($mysqliStatement)) {
-            echo "Insert successfully";
+        return mysqli_stmt_execute($mysqliStatement);
+    }
+
+    public function existsByEmail()
+    {
+        $countEmailQuery = "SELECT COUNT(email) FROM user_info where email = ?";
+        $stmt = mysqli_prepare($this->getConnection(), $countEmailQuery);
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        if ($count != 0) {
+            return true;
         } else {
-            echo "Insert failed: " . mysqli_stmt_error($mysqliStatement);
+            return false;
         }
     }
 
+    public function findByEmail() {
+        $query = "SELECT * FROM user_info WHERE email = ?";
+        $stmt = mysqli_prepare($this->getConnection(), $query);
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $stmt->bind_result($id, $username, $password, $firstName, $lastName, $email);
+        $byEmail = new User();
+        while($stmt->fetch()) {
+            $byEmail->email = $email;
+            $byEmail->userName = $username;
+            $byEmail->password = $password;
+            $byEmail->id = $id;
+            $byEmail->firstName = $firstName;
+            $byEmail->lastName = $lastName;
+        }
+        return $byEmail;
+    }
 
 }

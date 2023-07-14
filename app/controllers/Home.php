@@ -1,12 +1,13 @@
 <?php
 
+use Product;
+
 class Home extends Controller
 {
     public function index()
     {
-        $this->loadModel("User");
-        $user = new User();
-        $this->loadView("user_info", ["username" => $user->getUserName()]);
+        $product = new Product();
+        $this->loadView("product_list_page", ["products" => $product->index()]);
     }
 
 }

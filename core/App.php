@@ -9,7 +9,7 @@ class App
 
     public function __construct()
     {
-        $this->controller = "Home";
+        $this->controller = "Product";
         $this->action = "index";
         $this->params = [];
 

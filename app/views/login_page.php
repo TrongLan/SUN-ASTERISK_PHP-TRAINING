@@ -22,6 +22,9 @@
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
                 </div>
+                <div class="card-body">
+                    Don't have account yet? <a href="/register">Create a new one.</a>
+                </div>
                 <?php
                 if (isset($dto["errorMessage"])) {
                     echo '<div class="card-footer" style="color: red">'

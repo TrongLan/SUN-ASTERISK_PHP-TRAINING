@@ -42,23 +42,37 @@
     </style>
 </head>
 <body>
+<?php
+require_once 'nav_bar.php';
+
+function showInputMessage($m, $fieldName)
+{
+    if (isset($m[$fieldName])) {
+        echo "<div style='color: red'><p>" . $m[$fieldName] . "</p></div>";
+    }
+}
+
+?>
 <div class="container">
+    <br>
     <h2>New Product</h2>
     <form method="POST" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="code">Code:</label>
-                <input type="text" class="form-control" id="code" name="code" required>
+                <input type="text" class="form-control" id="code" name="code">
+                <?php showInputMessage($dto["errors"], "code"); ?>
             </div>
             <div class="form-group col-md-8">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <input type="text" class="form-control" id="title" name="title">
+                <?php showInputMessage($dto["errors"], "title"); ?>
             </div>
         </div>
 
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description" required></textarea>
+            <textarea class="form-control" id="description" name="description"></textarea>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -68,11 +82,13 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="price">Price (USD):</label>
-                <input type="number" class="form-control" id="price" name="price" required>
+                <input type="number" class="form-control" id="price" name="price">
+                <?php showInputMessage($dto["errors"], "price"); ?>
             </div>
             <div class="form-group col-md-3">
                 <label for="quantity">Quantity:</label>
-                <input type="number" class="form-control" id="quantity" name="quantity" required>
+                <input type="number" class="form-control" id="quantity" name="quantity">
+                <?php showInputMessage($dto["errors"], "quantity"); ?>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Add</button>
@@ -82,7 +98,7 @@
     <div id="cropperModal" class="modal">
         <div class="modal-content">
             <div class="cropper-container">
-                <img src="" id="cropperImage">
+                <img src="" id="cropperImage" alt="product image">
             </div>
             <div class="modal-footer">
                 <button id="cropButton">Crop</button>

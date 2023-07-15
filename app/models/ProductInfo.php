@@ -169,7 +169,7 @@ class ProductInfo extends Database
         $productList = [];
         while ($stmt->fetch()) {
             $info = new ProductInfo();
-            $infoObject = $this->mapToProductInfoObject(
+            $this->mapToProductInfoObject(
                 $info, $uuid, $code, $description, $price, $quantity, $image, $title);
             $productList[] = $info;
         }
@@ -197,6 +197,44 @@ class ProductInfo extends Database
         $productInfo->setQuantity($quantity);
         $productInfo->setImage($image);
         $productInfo->setTitle($title);
+    }
+
+    public function existsByCode($code)
+    {
+        $countEmailQuery = "SELECT COUNT(code) FROM products where code = ?";
+        $stmt = mysqli_prepare($this->getConnection(), $countEmailQuery);
+        $stmt->bind_param("s", $code);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        return $count != 0;
+    }
+
+    public function deleteById($uuid)
+    {
+        $query = "DELETE FROM products WHERE uuid = ?";
+        $stmt = mysqli_prepare($this->getConnection(), $query);
+        $stmt->bind_param("s", $uuid);
+        $stmt->execute();
+    }
+
+    public function updateById($uuid, ProductInfo $info)
+    {
+        $query = "UPDATE products SET
+                    title = ?,
+                    description = ?,
+                    price = ?,
+                    quantity = ?
+                WHERE uuid = '" . $uuid . "'";
+        $stmt = mysqli_prepare($this->getConnection(), $query);
+        $stmt->bind_param(
+            "ssdi",
+            $info->title,
+            $info->description,
+            $info->price,
+            $info->quantity
+        );
+        return $stmt->execute();
     }
 
 }

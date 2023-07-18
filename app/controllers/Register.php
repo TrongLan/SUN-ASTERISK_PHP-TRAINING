@@ -11,12 +11,20 @@ class Register extends Controller
     {
         $userModel = $this->loadModel("User");
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $this->errors = CustomValidator::commonValidate([
+            $requiredErrors = CustomValidator::commonValidate([
                 "email" => $_POST["email"],
                 "username" => $_POST["username"],
                 "password" => $_POST["password"],
                 "first-name" => $_POST["first-name"],
                 "last-name" => $_POST["last-name"]]);
+            $lengthErrors = CustomValidator::lengthValidation([
+                "email" => [$_POST["email"], 255],
+                "username" => [$_POST["username"], 50],
+                "first-name" => [$_POST["first-name"], 50],
+                "last-name" => [$_POST["last-name"], 50]
+            ]);
+            $this->errors = array_merge($requiredErrors, $lengthErrors);
+
             if ($userModel->existsByUsername($_POST["username"])) {
                 $this->errors["username"] = "username has already been taken.";
             }

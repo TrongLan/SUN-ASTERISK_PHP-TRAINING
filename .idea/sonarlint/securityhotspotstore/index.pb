@@ -27,8 +27,6 @@ R
 bootstrap.php,2\5\25e107ad2014436c87d0d11c555519e76499eb18
 E
 app/views/nav_bar.php,a\c\ac0ba05fea1cacfc1b269c98ea4f7c12aab1b4e8
-L
-app/controllers/Register.php,f\0\f056cab8640dbc5bf69934a1a80e4b9e53013ca0
 B
 app/errors/404.php,e\3\e3bb787ce818cc460dba3921028bb231328e5df4
 <

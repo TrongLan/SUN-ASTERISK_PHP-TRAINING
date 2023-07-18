@@ -31,12 +31,22 @@ class Product extends Controller
         $this->loginRequire();
         $productInfo = $this->loadModel("ProductInfo");
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $this->errors = CustomValidator::commonValidate([
+            $requiredErrors = CustomValidator::commonValidate([
                 "code" => $_POST["code"],
                 "title" => $_POST["title"],
                 "price" => $_POST["price"],
                 "quantity" => $_POST["quantity"],
             ]);
+            $lengthErrors = CustomValidator::lengthValidation([
+                "code" => [$_POST["code"], 50],
+                "title" => [$_POST["title"], 100],
+                "description" => [$_POST["description"], 50000],
+            ]);
+            $numberErrors = CustomValidator::numberValidation([
+                "price" => [$_POST["price"], [0, 100]],
+                "quantity" => [$_POST["quantity"], [0, 100]]
+            ]);
+            $this->errors = array_merge($requiredErrors, $lengthErrors, $numberErrors);
 
             if ($productInfo->existsByCode($_POST["code"])) {
                 $this->errors["code"] = "code has already existed.";

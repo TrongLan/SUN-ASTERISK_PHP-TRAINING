@@ -113,11 +113,12 @@ class User extends Database
     public function saveUserInfo()
     {
         $insertUserQuery =
-            "INSERT INTO user_info (email, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)";
+            "INSERT INTO user_info (id, email, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?, ?)";
         $mysqliStatement = mysqli_prepare($this->getConnection(), $insertUserQuery);
         mysqli_stmt_bind_param(
             $mysqliStatement,
-            'sssss',
+            'ssssss',
+            $this->id,
             $this->email,
             $this->firstName,
             $this->lastName,
@@ -126,29 +127,37 @@ class User extends Database
         return mysqli_stmt_execute($mysqliStatement);
     }
 
-    public function existsByEmail()
+    public function existsByEmail($e)
     {
         $countEmailQuery = "SELECT COUNT(email) FROM user_info where email = ?";
         $stmt = mysqli_prepare($this->getConnection(), $countEmailQuery);
-        $stmt->bind_param("s", $this->email);
+        $stmt->bind_param("s", $e);
         $stmt->execute();
         $stmt->bind_result($count);
         $stmt->fetch();
-        if ($count != 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return $count != 0;
     }
 
-    public function findByEmail() {
+    public function existsByUsername($username)
+    {
+        $countEmailQuery = "SELECT COUNT(username) FROM user_info where username = ?";
+        $stmt = mysqli_prepare($this->getConnection(), $countEmailQuery);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        return $count != 0;
+    }
+
+    public function findByEmail($e)
+    {
         $query = "SELECT * FROM user_info WHERE email = ?";
         $stmt = mysqli_prepare($this->getConnection(), $query);
-        $stmt->bind_param("s", $this->email);
+        $stmt->bind_param("s", $e);
         $stmt->execute();
         $stmt->bind_result($id, $username, $password, $firstName, $lastName, $email);
         $byEmail = new User();
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             $byEmail->email = $email;
             $byEmail->userName = $username;
             $byEmail->password = $password;

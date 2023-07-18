@@ -9,7 +9,7 @@ class App
 
     public function __construct()
     {
-        $this->controller = "Home";
+        $this->controller = "Product";
         $this->action = "index";
         $this->params = [];
 
@@ -28,7 +28,7 @@ class App
 
     public function loadError($code = "404")
     {
-        require_once "errors/" . $code . ".php";
+        require_once "./app/errors/" . $code . ".php";
     }
 
     public function requestHandling()
@@ -46,6 +46,7 @@ class App
             $this->controller = new $this->controller();
         } else {
             $this->loadError();
+            exit();
         }
 
         if (isset($urlComponents[1])) {
@@ -53,6 +54,7 @@ class App
                 $this->action = trim($urlComponents[1]);
             } else {
                 $this->loadError();
+                exit();
             }
             unset($urlComponents[1]);
         }

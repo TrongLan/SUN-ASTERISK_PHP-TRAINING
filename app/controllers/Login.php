@@ -6,15 +6,21 @@ class Login extends Controller
 
     public function index()
     {
+        if (!$this->isNotLoggedIn()) {
+            header("Location: /product");
+            exit();
+        }
         $userModel = $this->loadModel("User");
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $userModel->setEmail($_POST["email"]);
-            $userModel->setPassword($_POST["password"]);
-
-            if ($userModel->existsByEmail()) {
-                $byEmail = $userModel->findByEmail();
-                if (password_verify($userModel->getPassword(), $byEmail->getPassword())) {
-                    header("Location: /home");
+            if ($userModel->existsByEmail($_POST["email"])) {
+                $byEmail = $userModel->findByEmail($_POST["email"]);
+                if (password_verify($_POST["password"], $byEmail->getPassword())) {
+                    $_SESSION["user_id"] = $byEmail->getId();
+                    if ($_POST['rememberMe']) {
+                        $cookieExpiration = time() + (2 * 60);
+                        setcookie('remember_me', $byEmail->getId(), $cookieExpiration, '/');
+                    }
+                    header("Location: /product");
                     unset($this->errorMessage);
                 } else {
                     $this->errorMessage = "Invalid username or password.";

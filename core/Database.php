@@ -5,7 +5,7 @@ class Database
     public $serverName = "localhost";
     public $username = "root";
     public $databasePassword = "Landt@0812";
-    public $databaseName = "php_tiv";
+    public $databaseName = "sun-asterisk_php-training";
 
     public $connection;
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Login Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -19,8 +19,16 @@
                             <label for="password">Password</label>
                             <input type="password" name="password" class="form-control" required>
                         </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember Me</label>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
+                </div>
+                <div class="card-body">
+                    Don't have account yet? <a href="/register">Sign up</a>
                 </div>
                 <?php
                 if (isset($dto["errorMessage"])) {

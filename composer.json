@@ -1,0 +1,16 @@
+{
+  "name": "vendor_name/controllers",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "ThinkPad",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "ramsey/uuid": "^4.7",
+    "ext-mysqli": "*"
+  }
+}

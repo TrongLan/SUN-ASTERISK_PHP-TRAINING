@@ -37,6 +37,7 @@ class Product extends Controller
                 "price" => $_POST["price"],
                 "quantity" => $_POST["quantity"],
             ]);
+
             if ($productInfo->existsByCode($_POST["code"])) {
                 $this->errors["code"] = "code has already existed.";
             }
@@ -104,17 +105,6 @@ class Product extends Controller
                 $updateData->setDescription($_POST["description"]);
                 $updateData->setPrice($_POST["price"]);
                 $updateData->setQuantity($_POST["quantity"]);
-//                $cropData = $_POST["cropData"];
-                // xử lý lưu ảnh
-//                $image = $_FILES["image"];
-//                if ($image["error"] === UPLOAD_ERR_OK) {
-//                    // xử lý ảnh cropped
-//                    $croppedImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $cropData));
-//                    $fileName = uniqid() . '_' . $image['name'];
-//                    $croppedImagePath = 'app/images/' . $fileName;
-//                    file_put_contents($croppedImagePath, $croppedImage);
-//                    $updateData->setImage($croppedImagePath);
-//                }
                 // lưu vào csdl
                 $savedProductInfo = $updateData->updateById($uuid, $updateData);
                 if ($savedProductInfo) {
